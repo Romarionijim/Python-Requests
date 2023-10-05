@@ -26,7 +26,7 @@ class GoRestApi(ApiRequests):
         return self.__get_gender_count("female")
 
     def create_even_genders(self):
-        response = None
+        responses = []
         male_count = self.get_male_count()
         female_count = self.get_female_count()
         difference = abs(male_count - female_count)
@@ -42,7 +42,8 @@ class GoRestApi(ApiRequests):
                 "status": "active",
             }
             for i in range(difference):
-                response = self.post(f"{self.base_url}/{self.users_end_point}", female_data)
+                response = self.post(f"{self.base_url}/{self.users_end_point}", female_data, True)
+                responses.append(response)
 
         elif male_count < female_count:
             male_data = {
@@ -53,6 +54,8 @@ class GoRestApi(ApiRequests):
                 "status": "active",
             }
             for i in range(difference):
-                response = self.post(f"{self.base_url}/{self.users_end_point}", male_data)
+                response = self.post(f"{self.base_url}/{self.users_end_point}", male_data, True
+                                     )
+                responses.append(response)
 
-        return response
+        return responses

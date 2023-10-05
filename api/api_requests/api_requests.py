@@ -21,7 +21,7 @@ class ApiRequests:
         response = self.requests.get(url)
         return response
 
-    def post(self, url: str, post_data: Dict[str, T], token_required: bool = False):
+    def post(self, url: str, post_data: Dict[str, T], token_required:bool = False):
         headers = {}
         self.__is_token_required(headers, token_required)
         response = self.requests.post(url, headers=headers, data=post_data)
