@@ -1,16 +1,15 @@
 from api.api_requests.api_requests import ApiRequests
-import requests
 from api.urls.api_urls import ApiUrls
 from api.endpoints.api_endpoints import ApiEndpoints
 from utils.faker import Randomizer
 
 
 class GoRestApi(ApiRequests):
+    base_url = ApiUrls.GOREST_API_URL.value
+    users_end_point = ApiEndpoints.USERS.value
 
     def get_users(self):
-        base_url = ApiUrls.GOREST_API_URL
-        users_end_point = ApiEndpoints.USERS
-        response = self.get(f"{base_url}/{users_end_point}")
+        response = self.get(f"{self.base_url}/{self.users_end_point}")
         return response
 
     def __get_gender_count(self, gender):
@@ -31,26 +30,29 @@ class GoRestApi(ApiRequests):
         male_count = self.get_male_count()
         female_count = self.get_female_count()
         difference = abs(male_count - female_count)
-        if male_count > female_count:
+        if male_count == female_count:
+            print("both genders are equal")
+            return
+        elif male_count > female_count:
             female_data = {
                 "id": Randomizer.generate_random_numbers(),
-                "name": Randomizer.generate_female_name(),
+                "name": Randomizer.generate_Random_name(),
                 "email": Randomizer.generate_random_email(),
                 "gender": "female",
                 "status": "active",
             }
             for i in range(difference):
-                response = self.post(f"{ApiUrls.GOREST_API_URL}/{ApiEndpoints.USERS}", female_data, True)
+                response = self.post(f"{self.base_url}/{self.users_end_point}", female_data)
 
         elif male_count < female_count:
             male_data = {
                 "id": Randomizer.generate_random_numbers(),
-                "name": Randomizer.generate_male_name(),
+                "name": Randomizer.generate_Random_name(),
                 "email": Randomizer.generate_random_email(),
                 "gender": "male",
                 "status": "active",
             }
             for i in range(difference):
-                response = self.post(f"{ApiUrls.GOREST_API_URL}/{ApiEndpoints.USERS}", male_data, True)
+                response = self.post(f"{self.base_url}/{self.users_end_point}", male_data)
 
         return response

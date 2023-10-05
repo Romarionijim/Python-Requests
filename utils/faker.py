@@ -28,13 +28,3 @@ class Randomizer:
     def generate_random_email():
         fake_email = Randomizer.fake.email()
         return fake_email
-
-    @staticmethod
-    def generate_female_name():
-        faker_name = Randomizer.first_name_female()
-        return faker_name
-
-    @staticmethod
-    def generate_male_name():
-        faker_name = Randomizer.first_name_male()
-        return faker_name
