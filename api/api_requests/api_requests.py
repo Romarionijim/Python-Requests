@@ -17,7 +17,10 @@ class ApiRequests:
             headers["Authorization"] = f"Bearer {os.getenv('GOREST_API_TOKEN')}"
 
     def get(self, url: str):
-        response = self.requests.get(url)
+        headers = {
+            "Content-Type": "application/json",
+        }
+        response = self.requests.get(url, headers=headers)
         return response
 
     def post(self, url: str, post_data: Dict[str, T], token_required: bool = False):

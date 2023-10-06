@@ -25,3 +25,9 @@ def test_delete_inactive_users(init_objects):
     assert all(response.status_code == 204 for response in responses)
     inactive_users = go_rest_api.get_inactive_users()
     assert inactive_users == []
+
+
+def test_replace_email_extensions_with_co_il(init_objects):
+    go_rest_api = init_objects
+    responses = go_rest_api.replace_email_extension()
+    assert all(response.status_code == 204 for response in responses)
