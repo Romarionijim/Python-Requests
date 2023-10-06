@@ -32,4 +32,4 @@ def test_replace_email_extensions_with_co_il(init_objects):
     responses = go_rest_api.replace_email_extension()
     assert all(response.status_code == 204 for response in responses)
     users_email_extensions = go_rest_api.get_users_email_extensions()
-    assert all(emails == "co.il" for emails in users_email_extensions)
+    assert all(extension == "co.il" for extension in users_email_extensions)
