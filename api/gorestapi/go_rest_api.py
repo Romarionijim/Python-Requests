@@ -83,7 +83,7 @@ class GoRestApi(ApiRequests):
         print(email_extension)
         return email_extension
 
-    # filters all the email that do not have the .co.il extension
+    # check if email extension are != .co.il - and replace them all with the .co.il extension
     def replace_email_extension(self):
         responses = []
         users_list = self.get_users()
@@ -101,11 +101,17 @@ class GoRestApi(ApiRequests):
 
         return responses
 
-        # email_filter = lambda mail: mail.get("email")
-        # emails_list = list(map(email_filter, json_list))
-        # for email in emails_list:
-        #     mail_extension = self.__extract_email_extension(email)
-        #     if mail_extension != 'co.il':
-        #         response = self.patch(f"{self.__base_url}/{self.__users_end_point}/{}")
+    # email_filter = lambda mail: mail.get("email")
+    # emails_list = list(map(email_filter, json_list))
+    # for email in emails_list:
+    #     mail_extension = self.__extract_email_extension(email)
+    #     if mail_extension != 'co.il':
+    #         response = self.patch(f"{self.__base_url}/{self.__users_end_point}/{}")
 
-    # check if email extension are != .co.il - and replace them all with the .co.il extension
+    def get_users_email_extensions(self):
+        users = self.get_users()
+        json_list = users.json()
+        for user in json_list:
+            user_email = user.get("email")
+            user_extensions = self.__extract_email_extension(user_email)
+            return list(user_extensions)
