@@ -1,5 +1,4 @@
 import requests
-from api.urls.api_urls import ApiUrls
 from typing import Dict, TypeVar
 from dotenv import load_dotenv
 import os
@@ -21,20 +20,29 @@ class ApiRequests:
         response = self.requests.get(url)
         return response
 
-    def post(self, url: str, post_data: Dict[str, T], token_required:bool = False):
-        headers = {}
+    def post(self, url: str, post_data: Dict[str, T], token_required: bool = False):
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
         self.__is_token_required(headers, token_required)
         response = self.requests.post(url, headers=headers, data=post_data)
         return response
 
     def patch(self, url: str, patch_data: Dict[str, T], token_required: bool = False):
-        headers = {}
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
         self.__is_token_required(headers, token_required)
-        response = self.requests.post(url, headers=headers,data=patch_data)
+        response = self.requests.post(url, headers=headers, data=patch_data)
         return response
 
     def delete(self, url: str, token_required: bool = False):
-        headers = {}
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        }
         self.__is_token_required(headers, token_required)
         response = self.requests.delete(url, headers=headers)
         return response
